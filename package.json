@@ -1,7 +1,18 @@
 {
-  "name": "vite-template-react-plus",
-  "version": "1.0.0",
-  "description": "",
+  "name": "canrau.com",
+  "version": "0.1.0",
+  "description": "Website & Blog of Can Rau",
+  "keywords": [],
+  "homepage": "https://www.canrau.com",
+  "bugs": {
+    "url": "https://github.com/canrau/canrau.com/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/canrau/canrau.com.git"
+  },
+  "license": "MIT",
+  "author": "Can Rau <cansrau@gmail.com> (https://www.canrau.com)",
   "scripts": {
     "prepare": "husky install",
     "preinstall": "npx only-allow pnpm",
@@ -30,17 +41,6 @@
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/0x219/vite-template-react-plus.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/0x219/vite-template-react-plus/issues"
-  },
-  "homepage": "https://github.com/0x219/vite-template-react-plus#readme",
   "devDependencies": {
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",

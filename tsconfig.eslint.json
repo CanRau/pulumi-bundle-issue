@@ -1,4 +1,11 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src", "types", "vite.config.ts", "windi.config.ts"]
+  "include": [
+    "src",
+    "server",
+    "pages",
+    "types",
+    "vite.config.ts",
+    "windi.config.ts"
+  ]
 }

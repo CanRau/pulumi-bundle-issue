@@ -10,6 +10,8 @@
     "baseUrl": "./",
     "strict": true,
     "paths": {
+      "pages/*": ["./pages/*"],
+      "server/*": ["./server/*"],
       "app/*": ["./src/app/*"],
       "components/*": ["./src/components/*"],
       "hooks/*": ["./src/hooks/*"],
@@ -19,5 +21,11 @@
     },
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src", "types"]
+  "include": ["src", "types", "server", "pages"],
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
 }

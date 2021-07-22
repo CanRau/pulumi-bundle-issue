@@ -24,7 +24,10 @@
       { "devDependencies": ["*.config.ts"] }
     ],
     "import/prefer-default-export": "off",
-    "@typescript-eslint/naming-convention": ["off"]
+    "@typescript-eslint/naming-convention": ["off"],
+    "jsx-a11y/label-has-associated-control": [2, {
+      "assert": "either" // to allow for either nested or htmlFor
+    }]
   },
   "ignorePatterns": "*.js",
   "settings": {

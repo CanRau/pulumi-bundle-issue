@@ -1,6 +1,8 @@
 import { UserConfig, UserConfigFn } from "vite";
 import reactRefresh from "@vitejs/plugin-react-refresh";
-import legacy from "@vitejs/plugin-legacy";
+// legacy not working with ssr plugin
+// https://github.com/brillout/vite-plugin-ssr/issues/39
+// import legacy from "@vitejs/plugin-legacy";
 import tsconfigPaths from "vite-tsconfig-paths";
 import reactJsx from "vite-react-jsx";
 import WindiCSS from "vite-plugin-windicss";
@@ -26,7 +28,7 @@ const defineConfig: UserConfigFn = ({ mode }) => {
 
       reactRefresh(),
       tsconfigPaths(),
-      legacy(),
+      // legacy(),
       reactJsx(),
       mkcert({
         source: "coding",

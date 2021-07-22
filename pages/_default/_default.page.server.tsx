@@ -19,6 +19,7 @@ function render(pageContext: PageContext) {
 
   // See https://github.com/brillout/vite-plugin-ssr#html-head
   const { documentProps } = pageContext;
+  const lang = "en";
   const title = (documentProps && documentProps.title) || "Vite SSR app";
   const desc =
     (documentProps && documentProps.description) ||
@@ -26,7 +27,7 @@ function render(pageContext: PageContext) {
 
   // <link rel="icon" href="${logoUrl}" />
   return html`<!DOCTYPE html>
-    <html lang="en">
+    <html lang="${lang}">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

@@ -1,10 +1,10 @@
 import express from "express";
 import https from "https";
 import chalk from "chalk";
-import helmet from "helmet";
+// import helmet from "helmet";
 import { createPageRender } from "vite-plugin-ssr";
 import * as vite from "vite";
-import { cspHashes } from "@vitejs/plugin-legacy";
+// import { cspHashes } from "@vitejs/plugin-legacy";
 import mkcert from "vite-plugin-mkcert";
 
 const isProduction = process.env.NODE_ENV === "production";
@@ -14,16 +14,20 @@ async function startServer() {
   const app = express();
 
   // more at https://content-security-policy.com/
-  app.use(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-          "script-src": ["'self'", ...cspHashes.map((s) => `sha256-${s}`)],
-        },
-      },
-    })
-  );
+  // app.use(
+  //   helmet({
+  //     contentSecurityPolicy: {
+  //       directives: {
+  //         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+  //         "script-src": [
+  //           "self",
+  //           // !isProduction && "unsafe-inline",
+  //           ...cspHashes.map((s) => `sha256-${s}`),
+  //         ],
+  //       },
+  //     },
+  //   })
+  // );
 
   let viteDevServer;
   if (isProduction) {

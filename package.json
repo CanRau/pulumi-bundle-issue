@@ -45,7 +45,7 @@
       "eslint",
       "prettier --write"
     ],
-    "package.json": "pnpx sort-package-json"
+    "package.json": "npx sort-package-json"
   },
   "config": {
     "commitizen": {

@@ -10,6 +10,7 @@
     "baseUrl": "./",
     "strict": true,
     "paths": {
+      "types/*": ["./types/*"],
       "pages/*": ["./pages/*"],
       "server/*": ["./server/*"],
       "app/*": ["./src/app/*"],
@@ -21,7 +22,7 @@
     },
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src", "types", "server", "pages"],
+  "include": ["src", "types", "server", "pages", "src/components/components.tsx"],
   "ts-node": {
     "transpileOnly": true,
     "compilerOptions": {

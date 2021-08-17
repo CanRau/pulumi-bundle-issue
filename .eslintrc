@@ -29,7 +29,10 @@
       "assert": "either" // to allow for either nested or htmlFor
     }]
   },
-  "ignorePatterns": "*.js",
+  "ignorePatterns": [
+    "*.js",
+    // "*.page.route.*"
+  ],
   "settings": {
     "react": {
       "version": "17.0.2"

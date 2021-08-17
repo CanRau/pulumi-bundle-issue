@@ -10,6 +10,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import mkcert from "vite-plugin-mkcert";
 import ssr from "vite-plugin-ssr/plugin";
 import ViteRestart from "vite-plugin-restart";
+// import { viteCommonjs } from "@originjs/vite-plugin-commonjs";
 
 const defineConfig: UserConfigFn = ({ mode }) => {
   const config: UserConfig = {
@@ -17,6 +18,7 @@ const defineConfig: UserConfigFn = ({ mode }) => {
       https: true,
     },
     plugins: [
+      // viteCommonjs(),
       WindiCSS(),
 
       // consider
@@ -35,7 +37,10 @@ const defineConfig: UserConfigFn = ({ mode }) => {
       }),
       ssr(),
       ViteRestart({
-        restart: ["server"],
+        restart: [
+          "server/**/*",
+          // "windi.config.ts", // causes reload loop??
+        ],
       }),
     ],
     build: {

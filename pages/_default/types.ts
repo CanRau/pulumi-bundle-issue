@@ -9,4 +9,7 @@ export type PageContext = PageContextBuiltIn & {
     title?: string;
     description?: string;
   };
+  contextProps: {
+    locale: string;
+  };
 };

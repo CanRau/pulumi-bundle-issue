@@ -1,14 +1,20 @@
 import express from "express";
+import http from "http";
 import https from "https";
 import chalk from "chalk";
-// import helmet from "helmet";
 import { createPageRender } from "vite-plugin-ssr";
 import * as vite from "vite";
+import { log } from "../src/log";
+// import helmet from "helmet";
 // import { cspHashes } from "@vitejs/plugin-legacy";
-import mkcert from "vite-plugin-mkcert";
 
 const isProduction = process.env.NODE_ENV === "production";
 const root = `${__dirname}/..`;
+
+// https://github.com/brillout/vite-plugin-ssr/issues/127#issuecomment-893733307
+if (!isProduction) {
+  Error.stackTraceLimit = Infinity;
+}
 
 async function startServer() {
   const app = express();
@@ -36,12 +42,6 @@ async function startServer() {
     viteDevServer = await vite.createServer({
       root,
       server: { middlewareMode: true, https: true },
-
-      plugins: [
-        mkcert({
-          source: "coding",
-        }),
-      ],
     });
     app.use(viteDevServer.middlewares);
   }
@@ -50,8 +50,22 @@ async function startServer() {
 
   app.get("*", async (req, res, next) => {
     const url = req.originalUrl;
-    const contextProps = {};
+    log("SERVER req.originalUrl", { url });
+    const rawSlug = url.replace(/^\/+|\/+$/g, "");
+    const [locale, ...slugParts] = rawSlug.split("/");
+    const slug = slugParts.join("/");
+    log({ url, slug, slugParts, locale });
+    // todo: how to ensure slug part is a locale & supported?
+    // todo: MAYBE move all DB logic in here?
+    // https://en.wikipedia.org/wiki/IETF_language_tag
+    // https://www.ietf.org/rfc/bcp/bcp47.txt "en"/"de" = simple language subtag
+    const contextProps = { url, locale, slug, slugParts };
+    if (slugParts.length < 1) {
+      // todo: redirect to browser language or sthg
+      contextProps.errors = [...(contextProps.errors ?? []), "ERROR_LANGUAGE_MISSING"];
+    }
     const result = await renderPage({ url, contextProps });
+    // 404 / Error handling https://github.com/brillout/vite-plugin-ssr/issues/103
     if (result.nothingRendered) {
       return next();
       // if redirectTo
@@ -62,24 +76,29 @@ async function startServer() {
     } else {
       res.status(result.statusCode).send(result.renderResult);
     }
+
     return null;
   });
 
-  const port = 3000;
+  const port = isProduction ? 8080 : 3000;
+
   // app.listen(port);
-  // console.log(`Server running at http://localhost:${port}`);
+  // return log(`Server running at http://localhost:${port}`);
 
-  const httpsServer = https.createServer(
-    {
-      key: viteDevServer?.config?.server?.https?.key,
-      cert: viteDevServer?.config?.server?.https?.cert,
-    },
-    app
-  );
+  const server = isProduction
+    ? http.createServer(app)
+    : https.createServer(
+        {
+          key: viteDevServer?.config?.server?.https?.key,
+          cert: viteDevServer?.config?.server?.https?.cert,
+        },
+        app
+      );
 
-  httpsServer.listen(port, () => {
-    // eslint-disable-next-line
-    console.log(chalk.yellow`Server running at https://localhost:${port}`);
+  server.listen(port, () => {
+    const protocol = isProduction ? "http" : "https";
+    // eslint-disable-next-line no-console
+    log(chalk.yellow`Server running at ${protocol}://localhost:${port}`);
   });
 }
 

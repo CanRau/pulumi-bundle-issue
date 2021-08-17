@@ -1,32 +1,43 @@
-import React from "react";
+import React, { ReactElement, PropsWithChildren } from "react";
+// import { SSRProvider, Provider, defaultTheme } from "@adobe/react-spectrum";
+import { SSRProvider } from "@react-aria/ssr";
+import { log } from "src/log";
+// import NotFound from '@spectrum-icons/illustrations/NotFound'; // NOT WORKING in VITE CJS
 
-export { Page };
+type PageProps = PropsWithChildren<{
+  url?: string;
+  slug?: string;
+  slugParts?: string[];
+  error?: string;
+}>;
 
-function Page(): React.ReactElement {
+// const mapProp = (prop) => {
+//   console.log({ prop });
+//   // return
+// };
+
+export const Page = ({
+  // url,
+  // slug,
+  // slugParts,
+  error,
+  children,
+}: PageProps): ReactElement => {
+  // if (error) {
+  //   return (
+  //     <section className="bg-nord3 flex justify-center items-center p-52 text-nord4">
+  //       <h1>{error}</h1>
+  //     </section>
+  //   );
+  // }
+  log("empty index.page.tsx log");
+
+  // TODO: How to add "@adobe/react-spectrum" to vite-plugin-ssr
   return (
-    <div className="flex flex-col items-center w-full px-4 py-10 bg-cover bg-base-200">
-      <div className="flex flex-col relative overflow-hidden lg:(items-stretch flex-row) text-nord0">
-        <figure className="p-6 h-full max-w-none w-auto">
-          <img
-            src="https://picsum.photos/id/1005/300/200"
-            alt="placeholder"
-            className="rounded-lg shadow-lg max-w-none w-auto"
-          />
-        </figure>
-        <div className="max-w-md flex flex-1 flex-col flex-auto p-8">
-          <h2 className="text-xl font-semibold">Glass</h2>
-          <p>
-            Rerum reiciendis beatae tenetur excepturi aut pariatur est eos. Sit
-            sit necessitatibus veritatis sed molestiae voluptates incidunt iure
-            sapiente.
-          </p>
-          <div className="flex items-start flex-wrap -mx-1">
-            <button type="button" className="rounded-full m-1">
-              Get Started
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <SSRProvider>
+      {/* <Provider theme={defaultTheme} locale="en-US"> */}
+      {children}
+      {/* </Provider> */}
+    </SSRProvider>
   );
-}
+};

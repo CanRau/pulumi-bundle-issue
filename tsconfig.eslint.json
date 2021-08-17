@@ -8,6 +8,7 @@
     "src/**/*",
     "stories",
     "types",
+    "types/**/*",
     "vite.config.ts",
     "windi.config.ts"
   ]

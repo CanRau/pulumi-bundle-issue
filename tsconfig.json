@@ -1,32 +1,18 @@
 {
   "compilerOptions": {
     "strict": true,
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "importHelpers": true,
-    "jsx": "react-jsx",
+    "outDir": "bin",
+    "target": "es2016",
+    "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "sourceMap": true,
-    "baseUrl": "./",
-    "paths": {
-      "types/*": ["./types/*"],
-      "pages/*": ["./pages/*"],
-      "server/*": ["./server/*"],
-      "app/*": ["./src/app/*"],
-      "components/*": ["./src/components/*"],
-      "hooks/*": ["./src/hooks/*"],
-      "layouts/*": ["./src/layouts/*"],
-      "shared/*": ["./src/shared/*"],
-      "styles/*": ["./src/styles/*"]
-    }
+    "experimentalDecorators": true,
+    "pretty": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src", "types", "server", "pages", "src/components/components.tsx"],
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+  "files": ["index.ts"]
 }

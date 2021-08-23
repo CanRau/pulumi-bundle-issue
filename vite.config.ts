@@ -1,3 +1,4 @@
+import { resolve } from "path";
 import { UserConfig, UserConfigFn } from "vite";
 import reactRefresh from "@vitejs/plugin-react-refresh";
 // legacy not working with ssr plugin
@@ -17,7 +18,22 @@ const defineConfig: UserConfigFn = ({ mode }) => {
     server: {
       https: true,
     },
+    resolve: {
+      alias: {
+        src: resolve("./src"),
+        types: resolve("./types"),
+        pages: resolve("./pages"),
+        server: resolve("./server"),
+        app: resolve("./src/app"),
+        components: resolve("./src/components"),
+        hooks: resolve("./src/hooks"),
+        layouts: resolve("./src/layouts"),
+        shared: resolve("./src/shared"),
+        styles: resolve("./src/styles"),
+      },
+    },
     plugins: [
+      // tsconfigPaths({ root: process.cwd(), loose: true }),
       // viteCommonjs(),
       WindiCSS(),
 
@@ -29,7 +45,6 @@ const defineConfig: UserConfigFn = ({ mode }) => {
       // imagetools https://github.com/JonasKruckenberg/imagetools/tree/main/packages/vite
 
       reactRefresh(),
-      tsconfigPaths(),
       // legacy(),
       reactJsx(),
       mkcert({

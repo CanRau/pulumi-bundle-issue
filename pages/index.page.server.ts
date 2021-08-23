@@ -1,5 +1,5 @@
 import fs from "fs";
-import { join } from "path";
+import { resolve } from "path";
 import { log } from "src/log";
 
 const { readFile } = fs.promises;
@@ -39,7 +39,7 @@ export async function addPageContext({
   contextProps: { locale, slug, slugParts },
 }: PageContext): Promise<Partial<PageContext>> {
   const fileName = !slug ? "index" : slugParts.join("-");
-  const filePath = join("..", "canrau.com_CONTENT", locale, `${fileName}.json`);
+  const filePath = resolve("..", "..", "canrau.com_CONTENT", locale, `${fileName}.json`);
 
   let rawFile;
   try {

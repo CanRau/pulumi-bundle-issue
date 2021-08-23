@@ -1,36 +1,38 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { createPageRender } from "vite-plugin-ssr";
 // import * as vite from "vite";
-import * as fs from "fs";
-import { join } from "path";
+// import * as fs from "fs";
+// import { join } from "path";
 // import helmet from "helmet";
 // import { cspHashes } from "@vitejs/plugin-legacy";
 
-import "../dist/server/importBuild";
+// require("vite-plugin-ssr"); // just for testing purposes
 
-const root = `${__dirname}/..`;
+import "../dist/server/importBuild"; // extension necessary?
 
-type StaticFileHandlerProps = {
-  url: string;
-  isBase64Encoded: boolean;
-};
-const staticFileHandler = async ({
-  url,
-  isBase64Encoded,
-}: StaticFileHandlerProps): Promise<string | Error> =>
-  new Promise((resolve, reject) => {
-    const buf: any = [];
-    const stream = fs.createReadStream(join(root, "dist", "client", url));
-    stream.on("error", (err) => {
-      reject(err);
-    });
-    stream.on("open", () => {});
-    stream.on("data", (chunk) => buf.push(chunk));
-    stream.on("end", () => {
-      const bodyBuffer = Buffer.concat(buf);
-      resolve(bodyBuffer.toString(isBase64Encoded ? "base64" : "utf8"));
-    });
-  });
+// const root = `${__dirname}/..`;
+
+// type StaticFileHandlerProps = {
+//   url: string;
+//   isBase64Encoded: boolean;
+// };
+// const staticFileHandler = async ({
+//   url,
+//   isBase64Encoded,
+// }: StaticFileHandlerProps): Promise<string | Error> =>
+//   new Promise((resolve, reject) => {
+//     const buf: any = [];
+//     const stream = fs.createReadStream(join(root, "dist", "client", url));
+//     stream.on("error", (err) => {
+//       reject(err);
+//     });
+//     stream.on("open", () => {});
+//     stream.on("data", (chunk) => buf.push(chunk));
+//     stream.on("end", () => {
+//       const bodyBuffer = Buffer.concat(buf);
+//       resolve(bodyBuffer.toString(isBase64Encoded ? "base64" : "utf8"));
+//     });
+//   });
 
 export const handler = async (
   event: APIGatewayProxyEvent
@@ -38,15 +40,15 @@ export const handler = async (
   const url = event.path;
   if (event.httpMethod.toLowerCase() === "get") {
     // if (/\.{css|js(on)?}$/.test(url)) {}
-    const staticFile = await staticFileHandler({ url, isBase64Encoded: event.isBase64Encoded });
+    // const staticFile = await staticFileHandler({ url, isBase64Encoded: event.isBase64Encoded });
 
-    if (staticFile !== false && typeof staticFile === "string") {
-      return {
-        statusCode: 200,
-        body: staticFile,
-        isBase64Encoded: event.isBase64Encoded,
-      };
-    }
+    // if (typeof staticFile === "string") {
+    //   return {
+    //     statusCode: 200,
+    //     body: staticFile,
+    //     isBase64Encoded: event.isBase64Encoded,
+    //   };
+    // }
 
     const renderPage = createPageRender({ isProduction: true });
 

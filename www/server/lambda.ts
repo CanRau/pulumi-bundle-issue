@@ -7,7 +7,7 @@ export const handler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult | undefined> => {
   const url = event.path;
-  if (event.httpMethod.toLowerCase() === "get") {
+  if (event?.httpMethod?.toLowerCase() === "get") {
     const renderPage = SSR.createPageRender({ isProduction: true });
 
     const rawSlug = url.replace(/^\/+|\/+$/g, "");
@@ -25,6 +25,7 @@ export const handler = async (
       contextProps.errors = [...(contextProps.errors ?? []), "ERROR_LANGUAGE_MISSING"];
     }
     const result = await renderPage({ url, contextProps });
+
     // 404 / Error handling https://github.com/brillout/vite-plugin-ssr/issues/103
     if (result.nothingRendered) {
       return {
